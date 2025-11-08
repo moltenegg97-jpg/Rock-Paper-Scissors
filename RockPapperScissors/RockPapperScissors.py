@@ -59,7 +59,7 @@ def main(amount_of_wins):
     player_wins = 0 #количество побед игрока
     pc_wins = 0 #количество побед компьютера
     
-    while game_is_finished == False and wins < amount_of_wins:
+    while wins < amount_of_wins:
 
         player_move = player_turn()
         if player_move ==  'quit':
@@ -69,16 +69,21 @@ def main(amount_of_wins):
         game_is_finished, winner = check_winner(player_move, 'игрок', pc_move, 'компьютер')
 
         if winner == 'игрок':
-            player_wins = player_wins+1
+            player_wins += 1
         if winner == 'компьютер':
-            pc_wins = pc_wins+1
+            pc_wins += 1
         print (f' текущий счет {player_wins}:{pc_wins}')
 
         print (f'game is finished: {game_is_finished}')
         if game_is_finished == True:
             wins = max(player_wins, pc_wins)
             game_is_finished = False
-    
+
+        if wins == amount_of_wins:
+            if player_wins == amount_of_wins:
+                print ('В общем сете победил игрок')
+            if pc_wins == amount_of_wins:
+                print ('В общем сете победил компьютер')
         logger.debug (f'wins {wins}')
         print ('-----------') #для визуального разделения игр
 
