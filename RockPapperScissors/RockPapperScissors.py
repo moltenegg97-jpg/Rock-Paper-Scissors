@@ -70,7 +70,7 @@ while game_is_finished == False and wins < amount_of_wins:
 
     print (f'game is finished: {game_is_finished}')
     if game_is_finished == True:
-        wins = max(pc_wins, pc_wins)
+        wins = max(player_wins, pc_wins)
         game_is_finished = False
     
     logger.debug (f'wins {wins}')
