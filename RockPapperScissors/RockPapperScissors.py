@@ -5,18 +5,17 @@ logger = logging
 logger.basicConfig(level = logging.INFO) #изменить INFO на DEBUG для большей информации
 moves = ['rock', 'paper', 'scissors']
 
-game_is_finished = False
+def set_games_amount():
+    amount_of_wins = 0 #необходимое изначальное значение, иначе придется делать 2 цикла
+    while amount_of_wins <= 0: #для проверки правильности ввода от пользователя
+        print('до скольки побед будем играть?')
+        try: 
+            amount_of_wins =  int(input())
+            if amount_of_wins <= 0:
+                print ('число должно быть больше 0')
+        except ValueError: print('введите число')
+    return amount_of_wins
 
-wins = 0 #максимальное кол-во побед одной из сторон
-player_wins = 0 #количество побед игрока
-pc_wins = 0 #количество побед компьютера
-
-while True: #для проверки правильности ввода от пользователя
-    print('до скольки побед будем играть?')
-    try: 
-        amount_of_wins =  int(input())
-        break
-    except ValueError: print('введите число')
     
 
 
@@ -37,6 +36,7 @@ def check_winner(player1_move, player1, player2_move, player2):
     if player1_move == player2_move:
         print ('ничья')
         return False, None
+    return False, None
 
 def player_turn():
     print ('Игрок 1 введите rock, paper, scissors or quit для того чтобы выйти')
@@ -52,28 +52,36 @@ def pc_turn():
     print (f'компьютер ввел {pc_move}')
     return pc_move
     
+def main(amount_of_wins):
+    game_is_finished = False
 
-while game_is_finished == False and wins < amount_of_wins:
-
-    player_move = player_turn()
-    if player_move ==  'quit':
-        print ('игра окончена')
-        break
-    pc_move = pc_turn()    
-    game_is_finished, winner = check_winner(player_move, 'игрок', pc_move, 'компьютер')
-
-    if winner == 'игрок':
-        player_wins = player_wins+1
-    if winner == 'компьютер':
-        pc_wins = pc_wins+1
-    print (f' текущий счет {player_wins}:{pc_wins}')
-
-    print (f'game is finished: {game_is_finished}')
-    if game_is_finished == True:
-        wins = max(player_wins, pc_wins)
-        game_is_finished = False
+    wins = 0 #максимальное кол-во побед одной из сторон
+    player_wins = 0 #количество побед игрока
+    pc_wins = 0 #количество побед компьютера
     
-    logger.debug (f'wins {wins}')
-    print ('-----------') #для визуального разделения игр
+    while game_is_finished == False and wins < amount_of_wins:
 
+        player_move = player_turn()
+        if player_move ==  'quit':
+            print ('игра окончена')
+            break
+        pc_move = pc_turn()    
+        game_is_finished, winner = check_winner(player_move, 'игрок', pc_move, 'компьютер')
+
+        if winner == 'игрок':
+            player_wins = player_wins+1
+        if winner == 'компьютер':
+            pc_wins = pc_wins+1
+        print (f' текущий счет {player_wins}:{pc_wins}')
+
+        print (f'game is finished: {game_is_finished}')
+        if game_is_finished == True:
+            wins = max(player_wins, pc_wins)
+            game_is_finished = False
+    
+        logger.debug (f'wins {wins}')
+        print ('-----------') #для визуального разделения игр
+
+amount_of_wins = set_games_amount()
+main(amount_of_wins)
 
