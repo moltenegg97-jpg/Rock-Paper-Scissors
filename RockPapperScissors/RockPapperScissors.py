@@ -33,7 +33,7 @@ def check_winner(player1_move, player1, player2_move, player2):
         return True, made_moves['rock']
     if 'paper' in made_moves and 'scissors' in made_moves:
         print (f' победил {made_moves['scissors']}')
-        return True, made_moves['paper']
+        return True, made_moves['scissors']
     if player1_move == player2_move:
         print ('ничья')
         return False, None
