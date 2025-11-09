@@ -54,13 +54,13 @@ def pc_turn():
     
 def main(amount_of_wins):
     game_is_finished = False
-
+    round = 1
     wins = 0 #максимальное кол-во побед одной из сторон
     player_wins = 0 #количество побед игрока
     pc_wins = 0 #количество побед компьютера
     
     while wins < amount_of_wins:
-
+        print (f'round: {round}')
         player_move = player_turn()
         if player_move ==  'quit':
             print ('игра окончена')
@@ -85,6 +85,8 @@ def main(amount_of_wins):
             if pc_wins == amount_of_wins:
                 print ('В общем сете победил компьютер')
         logger.debug (f'wins {wins}')
+        round += 1
+        logger.debug (f'в конце хода {round}')
         print ('-----------') #для визуального разделения игр
 
 amount_of_wins = set_games_amount()
